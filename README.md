@@ -7,3 +7,7 @@ A little help for a friend who sells products online and needs to download and p
 ## Subheader
 
 Not finished yet
+
+## Local Development
+
+1. 
