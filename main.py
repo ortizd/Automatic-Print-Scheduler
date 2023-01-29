@@ -14,6 +14,7 @@ root.title("Automatic print")
 root.geometry('450x450')
 root.config(bg="skyblue")
 
+folder_path= StringVar()
 
 def browse_button():
     global folder_path
@@ -24,8 +25,6 @@ def browse_button():
 my_frame= Frame(root, width=200, height=200)
 my_frame.grid(row=0, column=0, padx=10, pady=5)
 my_frame.config(bg="red")
-
-folder_path= StringVar()
 
 lbl1= Label(my_frame, textvariable=folder_path)
 lbl1.grid(row=1, column=0, padx=5, pady=5)
