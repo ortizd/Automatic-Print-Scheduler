@@ -21,7 +21,7 @@ def on_created(event):
 
 my_event_handler.on_created = on_created
 
-path = "C:/Users/dario/OneDrive/Escritorio/PrintPython/"
+path = "C:/Users/dario/OneDrive/Escritorio/Print/"
 go_recursively = True
 my_observer = Observer()
 my_observer.schedule(my_event_handler, path, recursive=go_recursively)
