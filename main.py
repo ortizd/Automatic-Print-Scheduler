@@ -13,6 +13,8 @@ from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 #Obs class
 
+from threading import *
+
 from tkinter import *
 from tkinter import filedialog
 
@@ -33,11 +35,14 @@ def button_browse():
 
 def button_run():
     if (len(folder_path.get())>0):
-        #print(folder_path.get())
+        #Daemon
+        #t.start()
+        #time.sleep(1)
+        #Daemon
         my_observer.start()
         try:
             while True:
-                time.sleep(1)
+                time.sleep(3)
         except KeyboardInterrupt:
             my_observer.stop()
             my_observer.join()
@@ -87,6 +92,13 @@ if __name__ == "__main__":
     go_recursively = True
     my_observer = Observer()
     my_observer.schedule(my_event_handler, path= folder_path.get()+"/", recursive=go_recursively)
+
+    #Daemon
+    #t= Thread(target= button_run)
+    #t.setDaemon(True)
+    #Daemon
+    
+    
 #Obs class
 
 root.mainloop()
