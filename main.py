@@ -1,7 +1,10 @@
 """ 
-This is the basic design, I need to improve it.
-the path is retrieved in the global variable folder_path
-The process is in the file Observer.py
+This is the basic development, I need to design the interface.
+
+When I click on the "Run button" the program should be
+minimized to the taskbar. The "Stop button" needs to be developed.
+The process should run on the background .
+
 """
 #Obs class
 import time
@@ -20,14 +23,7 @@ root.config(bg="skyblue")
 
 folder_path= StringVar()
 
-#Obs class
-if __name__ == "__main__":
-    patterns = ["*"]
-    ignore_patterns = None
-    ignore_directories = False
-    case_sensitive = True
-    my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
-#Obs class
+
 
 def button_browse():
     global folder_path
@@ -37,7 +33,7 @@ def button_browse():
 
 def button_run():
     if (len(folder_path.get())>0):
-        print(folder_path.get())
+        #print(folder_path.get())
         my_observer.start()
         try:
             while True:
@@ -46,6 +42,18 @@ def button_run():
             my_observer.stop()
             my_observer.join()
 
+def button_stop():
+    my_observer.stop()
+    my_observer.join()
+
+#Obs class
+# In this function I should send to print, it is necessary to recover the name of the created file since event.src_path brings the full path 
+def on_created(event):
+     #print(f"hey, {event.src_path} has been created!")
+     os.startfile(event.src_path, "print")
+#Obs class
+
+# Layout
 my_frame= Frame(root, width=200, height=200)
 my_frame.grid(row=0, column=0, padx=10, pady=5)
 my_frame.config(bg="red")
@@ -61,23 +69,24 @@ button_run= Button(my_frame, text="Run", command=button_run)
 button_run.grid(row=4, column=2, padx=5, pady=5)
 
 
-#Obs class
-# In this function I should send to print, it is necessary to recover the name of the created file since event.src_path brings the full path 
-def on_created(event):
-     #print(f"hey, {event.src_path} has been created!")
-     os.startfile(event.src_path, "print")
-
-
-my_event_handler.on_created = on_created
-
-go_recursively = True
-my_observer = Observer()
-my_observer.schedule(my_event_handler, path= folder_path.get()+"/", recursive=go_recursively)
-
-
+button_stop= Button(my_frame, text="Stop", command=button_stop)
+button_stop.grid(row=4, column=4, padx=5, pady=5)
+# Layout
 
 
 #Obs class
+if __name__ == "__main__":
+    patterns = ["*.jpg", "*.jpeg", "*.png", "*.bmp", "*.pdf", ".docx"]
+    ignore_patterns = None
+    ignore_directories = False
+    case_sensitive = True
+    my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
 
+    my_event_handler.on_created = on_created
+
+    go_recursively = True
+    my_observer = Observer()
+    my_observer.schedule(my_event_handler, path= folder_path.get()+"/", recursive=go_recursively)
+#Obs class
 
 root.mainloop()
