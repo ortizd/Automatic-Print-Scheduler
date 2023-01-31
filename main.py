@@ -3,7 +3,6 @@ This is the basic development, I need to design the interface.
 
 When I click on the "Run button" the program should be
 minimized to the taskbar. The "Stop button" needs to be developed.
-The process should run on the background .
 
 """
 #Obs class
@@ -12,8 +11,6 @@ import os
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 #Obs class
-
-from threading import *
 
 from tkinter import *
 from tkinter import filedialog
@@ -35,10 +32,7 @@ def button_browse():
 
 def button_run():
     if (len(folder_path.get())>0):
-        #Daemon
-        #t.start()
-        #time.sleep(1)
-        #Daemon
+        
         my_observer.start()
         try:
             while True:
@@ -52,9 +46,8 @@ def button_stop():
     my_observer.join()
 
 #Obs class
-# In this function I should send to print, it is necessary to recover the name of the created file since event.src_path brings the full path 
 def on_created(event):
-     #print(f"hey, {event.src_path} has been created!")
+     
      os.startfile(event.src_path, "print")
 #Obs class
 
@@ -92,13 +85,7 @@ if __name__ == "__main__":
     go_recursively = True
     my_observer = Observer()
     my_observer.schedule(my_event_handler, path= folder_path.get()+"/", recursive=go_recursively)
-
-    #Daemon
-    #t= Thread(target= button_run)
-    #t.setDaemon(True)
-    #Daemon
-    
-    
+        
 #Obs class
 
 root.mainloop()
