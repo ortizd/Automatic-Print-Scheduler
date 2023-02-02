@@ -10,6 +10,7 @@ import time
 import os
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler, FileSystemEventHandler
+import watchdog.events
 #Obs class
 
 from tkinter import *
@@ -26,12 +27,12 @@ folder_path= StringVar()
 
 class OnMyWatch():
     global folder_path
+    event_handler=""
+    my_observer=""
     def __init__(self):
-        patterns = ["*.jpg", "*.jpeg", "*.png", "*.bmp", "*.pdf", ".docx"]
-        ignore_patterns = None
-        ignore_directories = False
-        case_sensitive = True
-        event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
+        pass
+        #event_handler= Handler()
+        #my_observer=Observer()
         
     
     def run():
@@ -87,16 +88,22 @@ class OnMyWatch():
     # Layout
 
         
-class Handler(FileSystemEventHandler):
+class Handler(watchdog.events.PatternMatchingEventHandler):
+    def __init__(self):
+        patterns = ["*.jpg", "*.jpeg", "*.png", "*.bmp", "*.pdf", ".docx"]
+        ignore_patterns = None
+        ignore_directories = False
+        case_sensitive = True
+        watchdog.events.PatternMatchingEventHandler.__init__(self,patterns, ignore_patterns, ignore_directories, case_sensitive)
     #Obs class
     def on_created(self, event):
         os.startfile(event.src_path, "print")
     #Obs class
 
 #Obs class
-"""
+
 if __name__ == "__main__":
     myWatch= OnMyWatch()
     
-"""
+
 root.mainloop()
