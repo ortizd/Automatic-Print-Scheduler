@@ -39,7 +39,7 @@ def button_run():
                 time.sleep(3)
         except KeyboardInterrupt:
             my_observer.stop()
-            my_observer.join()
+        my_observer.join()
 
 def button_stop():
     my_observer.stop()
