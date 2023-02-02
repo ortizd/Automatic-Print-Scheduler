@@ -27,8 +27,6 @@ folder_path= StringVar()
 
 class OnMyWatch():
     global folder_path
-    event_handler=""
-    my_observer=""
     def __init__(self):
         pass
         #event_handler= Handler()
