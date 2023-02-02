@@ -31,24 +31,27 @@ class OnMyWatch():
         ignore_patterns = None
         ignore_directories = False
         case_sensitive = True
-        my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
-        self.observer= Observer()
+        event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
+        
     
-    def run(self):
+    def run():
+        path= folder_path.get()+"/"
         print("run executed")
+        my_observer= Observer()
         event_handler = Handler()
-        self.observer.schedule(event_handler, self.folder_path.get()+"/", recursive = True)
-        self.observer.start()
-        print(folder_path)
-        if (len(folder_path.get())>0):
+        my_observer.schedule(event_handler, path, recursive = True)
+        my_observer.start()
+        print(path)
+        if (len(path)>0):
             try:
                 while True:
-                    time.sleep(5)
+                    print("Observer Running")
+                    time.sleep(3)
             except:
-                self.observer.stop()
+                my_observer.stop()
                 print("Observer Stopped")
     
-            self.observer.join()
+            my_observer.join()
 
 
     def button_browse():
@@ -58,14 +61,14 @@ class OnMyWatch():
 
     
     def button_stop():
-        self.observer.stop()
-        self.observer.join()
+        my_observer.stop()
+        my_observer.join()
 
     # Layout
    
 
-    my_frame= Frame(root, width=200, height=200)
-    my_frame.grid(row=0, column=0, padx=10, pady=5)
+    my_frame= Frame(root, width=400, height=400)
+    my_frame.grid(row=0, column=0, padx=0, pady=5)
     my_frame.config(bg="red")
 
     lbl1= Label(my_frame, textvariable=folder_path)
@@ -84,48 +87,16 @@ class OnMyWatch():
     # Layout
 
         
-    """
-    def button_run():
-        if (len(folder_path.get())>0):
-            
-            my_observer.start()
-            try:
-                while True:
-                    time.sleep(3)
-            except KeyboardInterrupt:
-                my_observer.stop()
-            my_observer.join()
-    """
-        
 class Handler(FileSystemEventHandler):
     #Obs class
-    def on_created(event):
+    def on_created(self, event):
         os.startfile(event.src_path, "print")
     #Obs class
-
-
-
 
 #Obs class
 """
 if __name__ == "__main__":
-    #myWatch= OnMyWatch()
+    myWatch= OnMyWatch()
     
-
-    patterns = ["*.jpg", "*.jpeg", "*.png", "*.bmp", "*.pdf", ".docx"]
-    ignore_patterns = None
-    ignore_directories = False
-    case_sensitive = True
-    my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
-    #myWatch= OnMyWatch()
-    #myWatch.run()
 """
-   
-    
-        
-#Obs class
-
-
-
-
 root.mainloop()
