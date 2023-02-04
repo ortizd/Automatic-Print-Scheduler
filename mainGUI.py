@@ -63,7 +63,6 @@ class MyObserver(tk.Tk):
             messagebox.showinfo(message="Select a folder", title="Empty folder")
 
     def button_stop(self):
-        
         if(self.executed):
             global my_observer
             my_observer.stop()
