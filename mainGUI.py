@@ -32,8 +32,9 @@ class MyObserver(tk.Tk):
         self.button_stop.grid(row=4, column=4, padx=5, pady=5)
 
         #Obs
-        self.my_observer= Observer()
+        #self.my_observer= Observer()
         self.event_handler = Handler()
+        self.executed= False
         
         
 
@@ -44,32 +45,32 @@ class MyObserver(tk.Tk):
         print(self.folder_path)
 
     def run(self):
-        
-        print("run executed")
-        
-        #print(path)
-        if (os.path.isdir(self.folder_path)):
+        #print("run executed")
+        if(self.executed):
+            messagebox.showinfo(message="Program already running", title="Running")
+
+        elif(os.path.isdir(self.folder_path)):
+            self.executed= True
             path= self.folder_path+"/"
-            self.my_observer.start()
-            self.my_observer.schedule(self.event_handler, path, recursive = True)
-            try:
-                while True:
-                    print("Observer Running")
-                    time.sleep(3)
-            except:
-                self.my_observer.stop()
-                print("Observer Stopped")
-    
-            self.my_observer.join()
+            
+            global my_observer
+            my_observer= Observer()
+            my_observer.start()
+            my_observer.schedule(self.event_handler, path, recursive = True)
+            time.sleep(3)
+           
         else:
-            messagebox.showinfo(message="Select a folder", title="folder empty")
+            messagebox.showinfo(message="Select a folder", title="Empty folder")
 
     def button_stop(self):
-        if(self.my_observer.is_alive()):
-            self.my_observer.stop()
-            self.my_observer.join()
+        
+        if(self.executed):
+            global my_observer
+            my_observer.stop()
+            my_observer.join()
+            self.executed= False
         else:
-            messagebox.showinfo(message="program nor running", title="stop")
+            messagebox.showinfo(message="Program is not running", title="Stop")
 
 class Handler(watchdog.events.PatternMatchingEventHandler):
     def __init__(self):
@@ -78,10 +79,10 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
         ignore_directories = False
         case_sensitive = True
         watchdog.events.PatternMatchingEventHandler.__init__(self,patterns, ignore_patterns, ignore_directories, case_sensitive)
-    #Obs class
+    
     def on_created(self, event):
         os.startfile(event.src_path, "print")
-    #Obs class
+    
 
 if __name__ == "__main__":
     app= MyObserver()
