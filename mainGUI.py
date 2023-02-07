@@ -5,13 +5,24 @@ import os
 from watchdog.observers import Observer
 import watchdog.events
 from Handler import Handler
+import json
 
 class MyObserver(tk.Tk):
     
     def __init__(self):
         super().__init__()
+
+        
+        try:
+            with open("permanent_file.json", "r") as file:
+                self.folder_path = json.load(file)
+        except:
+            self.folder_path="Not selected"
+        #finally:
+         #   external_file.close()
+          #  del(external_file)
         #Var
-        self.folder_path="Not selected"
+        #self.folder_path="Not selected"
 
         #Layout
         self.title("Automatic print")
@@ -38,6 +49,8 @@ class MyObserver(tk.Tk):
 
     def button_browse(self):
         self.folder_path= filedialog.askdirectory()
+        with open("permanent_file.json", "w") as file:
+            json.dump(self.folder_path, file)
         self.lbl1["text"]= self.folder_path
 
 
