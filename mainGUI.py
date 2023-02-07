@@ -31,20 +31,17 @@ class MyObserver(tk.Tk):
         self.button_stop.grid(row=4, column=4, padx=5, pady=5)
 
         #Obs
-        #self.my_observer= Observer()
         self.event_handler = Handler()
         self.executed= False
         
         
 
     def button_browse(self):
-        filename= filedialog.askdirectory()
-        self.folder_path=filename
+        self.folder_path= filedialog.askdirectory()
         self.lbl1["text"]= self.folder_path
-        print(self.folder_path)
+
 
     def run(self):
-        #print("run executed")
         if(self.executed):
             messagebox.showinfo(message="Program already running", title="Running")
 
