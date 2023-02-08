@@ -25,7 +25,7 @@ class MyObserver(tk.Tk):
 
         #Frame
         self.title("Automatic printing")
-        self.config(bg="skyblue")
+        self.config(bg="skyblue", bd=5, relief="groove")
 
         self.lbl1= ttk.Label(self, text=self.folder_path)
         self.lbl1.grid(row=1, column=0, padx=5, pady=5)
