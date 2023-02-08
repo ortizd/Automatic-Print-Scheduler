@@ -18,32 +18,37 @@ class MyObserver(tk.Tk):
                 self.folder_path = json.load(file)
         except:
             self.folder_path="Not selected"
-        #finally:
-         #   external_file.close()
-          #  del(external_file)
-        #Var
-        #self.folder_path="Not selected"
+        # Program state variable
+        self.state= "Program not running"
 
-        #Layout
-        self.title("Automatic print")
-        self.geometry('450x450')
+        #Obs and Handler
+        self.event_handler = Handler()
+        self.executed= False
+
+        #Frame
+        self.title("Automatic printing")
         self.config(bg="skyblue")
 
         self.lbl1= ttk.Label(self, text=self.folder_path)
         self.lbl1.grid(row=1, column=0, padx=5, pady=5)
 
+        self.state= ttk.Label(self, text=self.state)
+        self.state.grid(row=4, column=2, padx=5, pady=5)
+
         self.button_browse= ttk.Button(self, text="Browse", command=self.button_browse)
         self.button_browse.grid(row=2, column=0, padx=5, pady=5)
 
         self.button_run= ttk.Button(self, text="Run", command=self.run)
-        self.button_run.grid(row=4, column=2, padx=5, pady=5)
+        self.button_run.grid(row=5, column=2, padx=5, pady=5)
 
         self.button_stop= ttk.Button(self, text="Stop", command=self.button_stop)
-        self.button_stop.grid(row=4, column=4, padx=5, pady=5)
+        self.button_stop.grid(row=5, column=3, padx=5, pady=5)
 
-        #Obs
-        self.event_handler = Handler()
-        self.executed= False
+        
+
+        self.files_accepted= ttk.Label(self, text="Files accepted to be printed: "+''.join(self.event_handler.patterns))
+        self.files_accepted.grid(row=3, column=0, padx=5, pady=5)
+        
         
         
 
@@ -60,14 +65,15 @@ class MyObserver(tk.Tk):
 
         elif(os.path.isdir(self.folder_path)):
             self.executed= True
-            path= self.folder_path+"/"
+            self.state["text"]= "Program running"
+            path= self.folder_path#+"/"
             
             global my_observer
             my_observer= Observer()
             my_observer.start()
-            my_observer.schedule(self.event_handler, path, recursive = True)
-            time.sleep(3)
-           
+            my_observer.schedule(self.event_handler, path, recursive = False)
+            #time.sleep(1)
+
         else:
             messagebox.showinfo(message="Select a folder", title="Empty folder")
 
@@ -77,6 +83,7 @@ class MyObserver(tk.Tk):
             my_observer.stop()
             my_observer.join()
             self.executed= False
+            self.state["text"]= "Program not running"
         else:
             messagebox.showinfo(message="Program is not running", title="Stop")
 
