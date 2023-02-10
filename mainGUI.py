@@ -17,15 +17,11 @@ class MyObserver(tk.Tk):
             with open("permanent_file.json", "r") as file:
                 self.json_dict= json.load(file)
                 self.folder_path = self.json_dict["path"]
-                if "subFolder" in self.json_dict:
-                    self.var_check.set(int(self.json_dict["subFolder"]))
-                    
-                else:
-                    self.var_check.set(0)
-                    self.sub_folder=False
-
+                self.var_check.set(int(self.json_dict["subFolder"]))
+               
         except:
             self.folder_path="Not selected"
+            self.sub_folder=False
         
 
         #Obs and Handler
@@ -33,7 +29,7 @@ class MyObserver(tk.Tk):
         self.executed= False
         
             
-
+        
         #Frame
         self.title("Automatic printing")
         self.config(bg="skyblue", bd=5, relief="groove")
@@ -44,7 +40,7 @@ class MyObserver(tk.Tk):
         self.state= ttk.Label(self, text=self.state)
         self.state.grid(row=4, column=2, padx=5, pady=5)
 
-        self.button_browse= ttk.Button(self, text="Browse", command=self.button_browse)
+        self.button_browse= ttk.Button(self, text="Browse", command=self.browse)
         self.button_browse.grid(row=2, column=0, padx=0, pady=5)
 
         self.button_run= ttk.Button(self, text="Run", command=self.run)
@@ -58,29 +54,61 @@ class MyObserver(tk.Tk):
         self.files_accepted= ttk.Label(self, text="Files accepted to be printed: "+''.join(self.event_handler.patterns))
         self.files_accepted.grid(row=3, column=0, padx=5, pady=5)
 
+                
         self.check_subFolders= ttk.Checkbutton(self, text="Include subfolders" ,variable=self.var_check, onvalue=1, offvalue=0, command=self.subFolders)
-        self.check_subFolders.grid(row=2, column=1, padx=1, pady=1)
+        self.check_subFolders.grid(row=5, column=1, padx=1, pady=1)
+        # self.check_subFolders.bind("<Button-1>", self.checkButton_click)
         
 
+    # def subFolders(self):
+    #     if self.var_check.get()==1:
+    #         with open("permanent_file.json", "w") as file:
+    #             json.dump({"path":self.folder_path, "subFolder":1}, file)
+    #     else:
+    #         with open("permanent_file.json", "w") as file:
+    #             json.dump({"path":self.folder_path, "subFolder":0}, file)
+
     def subFolders(self):
-        #global sub_folder
-        if self.var_check.get()==1:
-            with open("permanent_file.json", "w") as file:
-                json.dump({"path":self.folder_path, "subFolder":1}, file)
-            #self.sub_folder=True
+        if(self.executed):
+            messagebox.showinfo(message="Stop the program first", title="Running")
+            with open("permanent_file.json", "r") as file:
+                self.json_dict= json.load(file)
+                self.var_check.set(int(self.json_dict["subFolder"]))
         else:
-            with open("permanent_file.json", "w") as file:
-                json.dump({"path":self.folder_path, "subFolder":0}, file)
-            #self.sub_folder=False
+        
+            if (self.var_check.get()==1):
+                with open("permanent_file.json", "r") as file:
+                    data= json.load(file)
+                data["subFolder"]=1
+                with open("permanent_file.json", "w") as file:
+                    json.dump(data, file, indent=4)
+            else:
+                with open("permanent_file.json", "r") as file:
+                    data= json.load(file)
+                data["subFolder"]=0
+                with open("permanent_file.json", "w") as file:
+                    json.dump(data, file, indent=4)
+
+    # def checkButton_click(self, event):
+    #         if(self.executed):
+    #             messagebox.showinfo(message="Stop the program first", title="Running")
+    #         else:
+                
+    #             self.subFolders()
 
 
-    def button_browse(self):
-        if self.executed:
+
+
+    def browse(self):
+        if (self.executed):
             messagebox.showinfo(message="stop the program first", title="Running")
         else:
             self.folder_path= filedialog.askdirectory()
+            with open("permanent_file.json", "r") as file:
+                data= json.load(file)
+                data["path"]= self.folder_path
             with open("permanent_file.json", "w") as file:
-                json.dump({"path":self.folder_path, "subFolder": self.var_check.get()}, file)
+                json.dump(data, file, indent=4)
             self.lbl1["text"]= self.folder_path
 
 
@@ -91,8 +119,7 @@ class MyObserver(tk.Tk):
         elif(os.path.isdir(self.folder_path)):
             self.executed= True
             self.state["text"]= "Program running"
-            path= self.folder_path#+"/"
-            #global sub_folder
+            path= self.folder_path
             global my_observer
             my_observer= Observer()
             my_observer.start()
@@ -101,7 +128,6 @@ class MyObserver(tk.Tk):
             else:
                 self.sub_folder=False
             my_observer.schedule(self.event_handler, path, recursive = self.sub_folder)
-            #time.sleep(1)
 
         else:
             messagebox.showinfo(message="Select a folder", title="Empty folder")
@@ -114,7 +140,6 @@ class MyObserver(tk.Tk):
             self.executed= False
             self.state["text"]= "Program not running"
         else:
-            #messagebox.showinfo(message="Program is not running", title="Stop")
             msg_box= messagebox.askquestion("Program not running", "Program not running, do you want to start it?")
             if msg_box== "yes":
                 self.run()
