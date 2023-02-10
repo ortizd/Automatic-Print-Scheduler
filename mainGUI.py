@@ -22,6 +22,8 @@ class MyObserver(tk.Tk):
         except:
             self.folder_path="Not selected"
             self.sub_folder=False
+            with open("permanent_file.json", "w") as file:
+                json.dump({"path":self.folder_path, "subFolder":0}, file)
         
 
         #Obs and Handler
