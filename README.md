@@ -1,6 +1,3 @@
-# Demo automatic printing
+# Automatic Print Scheduler
 
-The program runs observing a selected folder and when a file is copied there sends it directly to print.
-
-A little help for a friend who sells products online and needs to download and print shipping labels.
-
+The program automatically monitors a designated folder and promptly sends any new file to the printer as soon as it is added to the folder
