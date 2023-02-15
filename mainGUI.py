@@ -162,7 +162,7 @@ class MyObserver(tk.Tk):
 
 
     def on_edit_extension_close(self, edit_window, close_type):
-        # Check if the information was edited and update files_accepted label
+        # Check if the information was edited and keep files_accepted label updated
         if close_type=="SAVE_AND_EXIT":
             data= self.my_json_reader.read_json()
             self.extension_accepted= [extension["extension"] for extension in data["extensions"] if extension["allowed"] == 1]
