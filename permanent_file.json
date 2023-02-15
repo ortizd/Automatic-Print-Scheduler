@@ -28,7 +28,7 @@
         },
         {
             "extension": "*.jpeg",
-            "allowed": 1
+            "allowed": 0
         },
         {
             "extension": "*.jpg",
@@ -44,11 +44,11 @@
         },
         {
             "extension": "*.bmp",
-            "allowed": 1
+            "allowed": 0
         },
         {
             "extension": "*.tiff",
-            "allowed": 1
+            "allowed": 0
         },
         {
             "extension": "*.ppt",
