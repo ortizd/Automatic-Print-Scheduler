@@ -10,7 +10,7 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
         my_json_reader= JsonReader()    
         data= my_json_reader.read_json()
         
-        # Extensions allowed to be printed
+        # Extensions allowed to be printed, readed from the JSON File
         patterns= [extension["extension"] for extension in data["extensions"] if extension["allowed"] == 1]
         ignore_patterns = None
         ignore_directories = True
