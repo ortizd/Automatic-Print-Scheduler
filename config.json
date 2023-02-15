@@ -1,6 +1,6 @@
 {
     "path": "C:/Users/dario/OneDrive/Escritorio/Print",
-    "subFolder": 1,
+    "subFolder": 0,
     "extensions": [
         {
             "extension": "*.doc",
@@ -8,15 +8,15 @@
         },
         {
             "extension": "*.docx",
-            "allowed": 0
+            "allowed": 1
         },
         {
             "extension": "*.pdf",
-            "allowed": 0
+            "allowed": 1
         },
         {
             "extension": "*.txt",
-            "allowed": 0
+            "allowed": 1
         },
         {
             "extension": "*.rtf",
