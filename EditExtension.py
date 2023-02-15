@@ -23,6 +23,7 @@ class EditExtension(Toplevel):
         DARK_GREEN = '#387A07'
         LIGHT_GREEN = '#B2D8A7'
 
+        # Define a custom style for buttons
         style = ttk.Style()
         style.configure("Blue.TButton", foreground=GRAY, bordercolor=BLUE, lightcolor=BLUE, darkcolor=DARK_BLUE, padding=3, relief="flat")
         style.configure("Blue.TCheckbutton", foreground=DARK_BLUE, background=LIGHT_BLUE, focuscolor=LIGHT_BLUE, bordercolor=BLUE, indicatorcolor=BLUE)
