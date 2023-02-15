@@ -1,0 +1,62 @@
+{
+    "path": "C:/Users/dario/OneDrive/Escritorio/Print",
+    "subFolder": 1,
+    "extensions": [
+        {
+            "extension": "*.doc",
+            "allowed": 1
+        },
+        {
+            "extension": "*.docx",
+            "allowed": 0
+        },
+        {
+            "extension": "*.pdf",
+            "allowed": 0
+        },
+        {
+            "extension": "*.txt",
+            "allowed": 0
+        },
+        {
+            "extension": "*.rtf",
+            "allowed": 0
+        },
+        {
+            "extension": "*.odt",
+            "allowed": 0
+        },
+        {
+            "extension": "*.jpeg",
+            "allowed": 1
+        },
+        {
+            "extension": "*.jpg",
+            "allowed": 1
+        },
+        {
+            "extension": "*.png",
+            "allowed": 1
+        },
+        {
+            "extension": "*.gif",
+            "allowed": 0
+        },
+        {
+            "extension": "*.bmp",
+            "allowed": 1
+        },
+        {
+            "extension": "*.tiff",
+            "allowed": 1
+        },
+        {
+            "extension": "*.ppt",
+            "allowed": 0
+        },
+        {
+            "extension": "*.pptx",
+            "allowed": 0
+        }
+    ]
+}
