@@ -90,7 +90,7 @@ class MyObserver(tk.Tk):
     ]
             # Get the extensions allowed to update the label "files_accepted" and create the JSON File by default    
             self.extension_accepted = [extension["extension"] for extension in self.extensions if extension["allowed"] == 1]
-            with open("permanent_file.json", "w") as file:
+            with open("config.json", "w") as file:
                 json.dump({"path":self.folder_path, "subFolder":0, "extensions":self.extensions}, file, indent=4)
         
         
