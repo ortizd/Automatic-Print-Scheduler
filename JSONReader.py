@@ -1,7 +1,7 @@
 import json
 class JsonReader:
         
-    
+    # Create read and write functios to use from the other files
     def read_json(self):
         with open("permanent_file.json", "r") as file:
             data = json.load(file)
